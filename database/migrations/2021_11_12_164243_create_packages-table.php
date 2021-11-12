@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddDescriptionAndImgAndCountryToHolidayPackages extends Migration
+class CreatePackagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,15 @@ class AddDescriptionAndImgAndCountryToHolidayPackages extends Migration
      */
     public function up()
     {
-        Schema::table('holiday_packages', function (Blueprint $table) {
-            $table->text('img_url');
-            $table->char('country');
+        Schema::create('packages', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('city', 50);
+            $table->text('country');
+            $table->char('img_url');
             $table->text('description');
+            $table->float('price',10, 2);
+            $table->timestamps();
+
         });
     }
 
@@ -27,8 +32,6 @@ class AddDescriptionAndImgAndCountryToHolidayPackages extends Migration
      */
     public function down()
     {
-        Schema::table('holiday_packages', function (Blueprint $table) {
-            $table->dropColumn(['img_url', 'country', 'description']);
-        });
+        Schema::dropIfExists('packages');
     }
 }
